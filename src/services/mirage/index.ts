@@ -1,6 +1,5 @@
 import { createServer, Factory, Model } from "miragejs";
 import faker from "faker";
-import { fake } from "faker/locale/zh_TW";
 
 type User = {
   name: string;

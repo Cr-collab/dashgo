@@ -9,7 +9,7 @@ interface  PaginationProps {
   // rgistros por pagina 
   currentPage?: number;
   //qual que é pagina atual  
-  onPageChange: (page: number) => void;
+  onPageChange1: (page: number) => void;
   // o que acontece qaundo a pagina mudar 
 
 }
@@ -27,7 +27,7 @@ export function Pagination({
   totalCountOfRegisters,
   registersPerPage = 10,
   currentPage,
-  onPageChange
+  onPageChange1
 }: PaginationProps){
 
   const lastPage = Math.floor(totalCountOfRegisters / registersPerPage);
@@ -70,7 +70,7 @@ export function Pagination({
              currentPage > ( 1 + siblingsCount) && (
                <>
                
-                <PaginationItem number={1} />
+                <PaginationItem number={1} onPageChange={onPageChange1} />
                 {currentPage > (2+siblingsCount) && (  
                     <Text 
                     color="gray.300" 
@@ -84,14 +84,14 @@ export function Pagination({
 
             {
             previousPage.length > 0 && previousPage.map(page =>{
-           return  (<PaginationItem number={page} key={page} />)
+           return  (<PaginationItem onPageChange={onPageChange1}   number={page} key={page} />)
 
             }) }
 
-            <PaginationItem number={currentPage} isCurrent/>
+            <PaginationItem onPageChange={onPageChange1}  number={currentPage} isCurrent/>
            
             {nextPages.length > 0 && nextPages.map(page =>{
-           return(  <PaginationItem number={page} key={page} />)
+           return(  <PaginationItem onPageChange={onPageChange1}  number={page} key={page} />)
 
             }) }
 
@@ -106,7 +106,7 @@ export function Pagination({
                     textAlign="center"
                     >...  </Text> 
                   )}
-                  <PaginationItem number={lastPage} />
+                  <PaginationItem onPageChange={onPageChange1}  number={lastPage} />
                 </>
              )
            }

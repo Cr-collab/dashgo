@@ -1,11 +1,12 @@
-import { Box, Button, Checkbox, Flex, Heading, Icon, Table, Tbody, Td, Th, Thead, Tr, Text, useBreakpointValue, Spinner } from "@chakra-ui/react";
-import Link from "next/link";
+import {Link, Box, Button, Checkbox, Flex, Heading, Icon, Table, Tbody, Td, Th, Thead, Tr, Text, useBreakpointValue, Spinner } from "@chakra-ui/react";
 import { useState } from "react";
 import { RiAddLine } from "react-icons/ri";
 import { Header } from "../../components/Header";
 import { Pagination } from "../../components/Pagination";
 import { Sidebar } from "../../components/Sidebar";
+import { api } from "../../services/api";
 import { useUsers } from "../../services/hooks/useUsers";
+import { queryClient } from "../../services/queryClient";
 
 
 
@@ -22,7 +23,16 @@ export default function UserList(){
 
 
  
-  
+  async function  handlePrefectUser(userId : string) {
+    
+     await queryClient.prefetchQuery(["user", userId],async () =>{
+         const response = await api.get(`users/${userId}`)
+              console.log(response, "123")
+         return response.data
+     },{
+       staleTime: 1000 * 60 * 10 // 10 min
+     })
+  }
 
   return (
     <Box>
@@ -95,7 +105,9 @@ export default function UserList(){
        
                             <Td>
                               <Box>
+                              <Link color="purple.400" onMouseEnter={() => handlePrefectUser(user.id)}>
                                   <Text fontWeight="bold"> {user.name} </Text>   
+                                  </Link>
                                   <Text fontSize="sm" color="gray.300"> {user.email} </Text>   
                               </Box>
                             </Td>

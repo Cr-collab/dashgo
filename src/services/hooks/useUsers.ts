@@ -14,7 +14,7 @@ type GetUserResponse = {
 }
 
 export async function getUsers(page : number) : Promise<GetUserResponse> {
-  const {data , headers } = await api.get('http://localhost:3000/api/users', {
+  const {data , headers } = await api.get('/users', {
     params: {
       page,
     }
@@ -41,7 +41,7 @@ export async function getUsers(page : number) : Promise<GetUserResponse> {
 
 export function useUsers(page: number){
  return useQuery(['users', page],() => getUsers(page) ,{
-    staleTime: 1000 * 10
+    staleTime: 1000 * 60 * 10 // 10 min
   })
 
 }
